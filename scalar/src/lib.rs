@@ -1,4 +1,4 @@
-pub fn sum(a: i32, b: i32) -> i32 {
+pub fn sum(a: u8, b: u8) -> u8 {
     a + b
 }
 
