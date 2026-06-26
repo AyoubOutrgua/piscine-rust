@@ -26,22 +26,20 @@ pub fn delete_and_backspace(s: &mut String) {
 
 pub fn do_operations(v: &mut [String]) {
     for val in v {
+        let result: i32;
+        
         if val.contains('+') {
-            let x = val.split('+');
-            let mut sum: usize = 0;
-            for n in x {
-                let num: usize = n.parse().unwrap();
-                sum += num;
-            }
-            *val = sum.to_string();
-        } else if val.contains('-') {
-            let x = val.split('-');
-            let mut min: usize = 0;
-            for n in x {
-                let num: usize = n.parse().unwrap();
-                min -= num;
-            }
-            *val = min.to_string();
+            let parts: Vec<&str> = val.split('+').collect();
+
+            result = parts[0].parse::<i32>().unwrap() + parts[1].parse::<i32>().unwrap();
+        } else {
+            let parts: Vec<&str> = val.split('-').collect();
+
+            result = parts[0].parse::<i32>().unwrap() - parts[1].parse::<i32>().unwrap();
         }
+
+
+        val.clear();
+        val.push_str(&result.to_string());
     }
 }
