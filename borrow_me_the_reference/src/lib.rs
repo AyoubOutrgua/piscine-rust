@@ -38,8 +38,6 @@ pub fn do_operations(v: &mut [String]) {
             result = parts[0].parse::<i32>().unwrap() - parts[1].parse::<i32>().unwrap();
         }
 
-
-        val.clear();
-        val.push_str(&result.to_string());
+        *val = result.to_string();
     }
 }
