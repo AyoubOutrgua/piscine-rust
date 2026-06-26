@@ -15,6 +15,15 @@ pub fn vec_function(b: Vec<i32>) -> (Vec<i32>, Vec<f64>) {
 
 }
 
-// pub fn str_function(a: String) -> (String, String) {
-
-// }
+pub fn str_function(a: String) -> (String, String) {
+    let copy = a.clone();
+    let nums = copy.split_whitespace();
+    let mut res = String::new();
+    for n in nums {
+        let x: f64 = n.parse().unwrap();
+        res.push_str(&x.exp().to_string());
+        res.push(' ');
+    }
+    res.pop();
+    (a, res)
+}
