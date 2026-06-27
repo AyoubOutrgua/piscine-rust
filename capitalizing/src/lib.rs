@@ -13,13 +13,7 @@ pub fn capitalize_first(input: &str) -> String {
 pub fn title_case(input: &str) -> String {
     let mut s = String::new();
     for word in input.split_whitespace() {
-        for (i, c) in word.chars().enumerate() {
-            if i == 0 {
-                s.push(c.to_ascii_uppercase());
-                continue;
-            }
-            s.push(c);
-        }
+        s.push_str(&capitalize_first(word));
         s.push(' ');
     }
     s.pop();
