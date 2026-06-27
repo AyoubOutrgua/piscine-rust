@@ -11,13 +11,11 @@ pub fn capitalize_first(input: &str) -> String {
 }
 
 pub fn title_case(input: &str) -> String {
-    let mut s = String::new();
+    let mut words = Vec::new();
     for word in input.split_whitespace() {
-        s.push_str(&capitalize_first(word));
-        s.push(' ');
+        words.push(capitalize_first(word));
     }
-    s.pop();
-    s
+    words.join(" ")
 }
 
 pub fn change_case(input: &str) -> String {
