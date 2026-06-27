@@ -1,4 +1,4 @@
-use rand::RngExt;
+use rand::Rng;
 
 #[derive(PartialEq, Debug)]
 pub enum Suit {
@@ -19,8 +19,7 @@ pub enum Rank {
 
 impl Suit {
     pub fn random() -> Suit {
-        let n: u8 = rand::rng().random_range(1..=4);
-        Self::translate(n)
+        Self::translate(rand::thread_rng().gen_range(1..=4))
     }
 
     pub fn translate(value: u8) -> Suit {
@@ -37,8 +36,7 @@ impl Suit {
 
 impl Rank {
     pub fn random() -> Rank {
-        let n: u8 = rand::rng().random_range(1..=13);
-        Self::translate(n)
+        Self::translate(rand::thread_rng().gen_range(1..=13))
     }
 
     pub fn translate(value: u8) -> Rank {
