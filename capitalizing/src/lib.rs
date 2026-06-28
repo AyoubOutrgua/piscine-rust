@@ -13,9 +13,15 @@ pub fn capitalize_first(input: &str) -> String {
 pub fn title_case(input: &str) -> String {
     let mut words = String::new();
     let mut next: bool = false;
-    for c in input.chars() {
+    for (i, c) in input.chars().enumerate() {
+        if i == 0 {
+            words.push(c.to_ascii_uppercase());
+            continue;
+        }
         if c.is_whitespace() {
+            words.push(c);
             next = true;
+            continue;
         }
         if next {
             words.push(c.to_ascii_uppercase());
