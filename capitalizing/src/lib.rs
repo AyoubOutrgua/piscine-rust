@@ -20,6 +20,7 @@ pub fn title_case(input: &str) -> String {
         if next {
             words.push(c.to_ascii_uppercase());
             next = false;
+            continue;
         }
         words.push(c);
     }
