@@ -3,11 +3,8 @@ use std::collections::HashMap;
 pub fn is_permutation(s1: &str, s2: &str) -> bool {
     let map_s1: HashMap<char, usize> = generate_map(s1);
     let map_s2: HashMap<char, usize> = generate_map(s2);
-    
-    if map_s1 == map_s2 {
-        return true;
-    }
-    false
+
+    map_s1 == map_s2
 }
 
 pub fn generate_map(s: &str) -> HashMap<char, usize> {
