@@ -14,7 +14,7 @@ pub fn fetch_data(server: Result<&str, &str>, security_level: Security) -> Strin
                 Security::Message => url.to_string(),
                 Security::Warning => url.to_string(),
                 Security::NotFound => url.to_string(),
-                Security::UnexpectedUrl => panic!("{}",url.to_string()),
+                Security::UnexpectedUrl => panic!("{}",url),
             }
         }
         Err(msg) => {
