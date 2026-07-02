@@ -14,19 +14,16 @@ pub fn fetch_data(server: Result<&str, &str>, security_level: Security) -> Strin
                 Security::Message => url.to_string(),
                 Security::Warning => url.to_string(),
                 Security::NotFound => url.to_string(),
-                // Security::UnexpectedUrl => panic!("{}",url.to_string()),
-                Security::UnexpectedUrl => todo!(),
+                Security::UnexpectedUrl => panic!("{}",url.to_string()),
             }
         }
-        Err(url) => {
+        Err(msg) => {
             match security_level {
-                Security::Unknown => todo!(),
-                // Security::Unknown => panic!("{}",Err),
+                Security::Unknown => panic!(),
                 Security::Message => panic!("ERROR: program stops"),
                 Security::Warning => "WARNING: check the server".to_string(),
-                Security::NotFound => format!("Not found: {}",url),
-                // Security::UnexpectedUrl => Err,
-                Security::UnexpectedUrl => todo!(),
+                Security::NotFound => format!("Not found: {}",msg),
+                Security::UnexpectedUrl => msg.to_string(),
             }
         }
     }
