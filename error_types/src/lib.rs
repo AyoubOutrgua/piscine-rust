@@ -2,9 +2,9 @@ use chrono::Utc;
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct FormError {
-    pub form_values: (String, String),
+    pub form_values: (&'static str, String),
     pub date: String,
-    pub err: String,
+    pub err: &'static str,
 }
 
 impl FormError {
@@ -12,9 +12,9 @@ impl FormError {
         let now = Utc::now();
         let date_now: String = now.format("%Y-%m-%d %H:%M:%S").to_string();
         Self {
-            form_values: (field_name.to_string(), field_value),
+            form_values: (field_name, field_value),
             date: date_now,
-            err: err.to_string(),
+            err: err,
         }
     }
 }
