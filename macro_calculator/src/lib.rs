@@ -18,15 +18,15 @@ pub fn calculate_macros(foods: &[Food]) -> json::JsonValue {
 
     for food in foods {
         let cal = food.calories.1.replace("kcal","").parse::<f64>().unwrap();
-        cals = cal * food.nbr_of_portions;
-        carbs = food.carbs * food.nbr_of_portions;
-        proteins = food.proteins * food.nbr_of_portions;
-        fats = food.fats * food.nbr_of_portions;
+        cals += cal * food.nbr_of_portions;
+        carbs += food.carbs * food.nbr_of_portions;
+        proteins += food.proteins * food.nbr_of_portions;
+        fats += food.fats * food.nbr_of_portions;
     }
     object!{
-        cals: cals,
-        carbs: carbs,
-        proteins: proteins,
-        fats: fats,
+        cals: (cals * 100.0).round() / 100.0,
+        carbs: (carbs * 100.0).round() / 100.0,
+        proteins: (proteins * 100.0).round() / 100.0,
+        fats: (fats * 100.0).round() / 100.0,
     }
 }
