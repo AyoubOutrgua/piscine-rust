@@ -64,3 +64,19 @@ pub fn check_for_securities(mall: &mut Mall, guards: HashMap<String, Guard>) {
         }
     }
 }
+
+pub fn cut_or_raise(mall: &mut Mall) {
+    for floor in mall.floors.values_mut() {
+        for store in floor.stores.values_mut() {
+            for employee in store.employees.values_mut() {
+                let working_hours = employee.working_hours.1 - employee.working_hours.0;
+
+                if working_hours >= 10 {
+                    employee.raise(employee.salary * 0.1);
+                } else {
+                    employee.cut(employee.salary * 0.1);
+                }
+            }
+        }
+    }
+}
