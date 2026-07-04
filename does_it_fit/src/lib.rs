@@ -17,7 +17,7 @@ pub fn area_fit(
         GeometricalShapes::Circle => circle_area(a),
     };
 
-    shape_area <= (area * times as f64)
+    shape_area >= (area * times as f64)
 }
 
 pub fn volume_fit(
@@ -36,5 +36,5 @@ pub fn volume_fit(
         GeometricalVolumes::Parallelepiped => parallelepiped_volume(a, b, c) as f64,
     };
 
-    shape_volume <= (volume * times as f64)
+    shape_volume >= (volume * times as f64)
 }
