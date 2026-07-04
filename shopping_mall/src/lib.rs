@@ -64,4 +64,3 @@ pub fn check_for_securities(mall: &mut Mall, guards: HashMap<String, Guard>) {
         }
     }
 }
-
