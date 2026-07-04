@@ -31,14 +31,5 @@ pub fn edit_distance(source: &str, target: &str) -> usize {
 
 
     let res = table[y][x];
-    println!("res => {}", res);
-
-    
-
-    println!("-----------------------------------------");
-    for row in &table {
-        println!("{:?}", row);
-    }
-
     res
 }
