@@ -1,4 +1,7 @@
 pub fn talking(text: &str) -> &str {
+    println!("********************************");
+    println!("{}",text);
+    println!("********************************");
     if text.is_empty() {
         return "Just say something!";
     }
