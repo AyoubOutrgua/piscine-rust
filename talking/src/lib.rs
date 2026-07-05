@@ -1,8 +1,5 @@
 pub fn talking(text: &str) -> &str {
-    println!("********************************");
-    println!("{}",text);
-    println!("********************************");
-    if text.is_empty() {
+    if text.trim().is_empty() {
         return "Just say something!";
     }
     let last = text.chars().last().unwrap();
@@ -23,6 +20,9 @@ fn is_all_upper(text: &str) -> bool {
         if c.is_alphabetic() && c.is_lowercase() {
             return false;
         }
+    }
+    if !text.chars().any(|c| c.is_alphabetic()) {
+        return false;
     }
     true
 }
