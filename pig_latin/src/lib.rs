@@ -14,15 +14,10 @@ fn pig(word: &str) -> String {
         }
     }
 
-    let firs_three: String = word.chars().take(3).collect();
-    if firs_three.contains("qu") {
-        if word.starts_with("qu") {
-            let first_two: String = word.chars().take(2).collect();
-            let skip_two: String = word.chars().skip(2).collect();
-            return format!("{}{}ay",skip_two,first_two)
-        }
-        let skip_three: String = word.chars().skip(3).collect();
-        return format!("{}{}ay",skip_three,firs_three)
+    if word.chars().nth(1) == Some('q') && word.chars().nth(2) == Some('u') {
+        let first_three: String = word.chars().take(3).collect();
+        let rest: String = word.chars().skip(3).collect();
+        return format!("{}{}ay", rest, first_three);
     }
 
     let mut first = String::new();
