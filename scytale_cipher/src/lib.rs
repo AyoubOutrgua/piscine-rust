@@ -15,5 +15,5 @@ pub fn scytale_cipher(message: &str, i: usize) -> String {
             }
         }
     }
-    res
+    res.trim_end_matches(' ').to_string()
 }
