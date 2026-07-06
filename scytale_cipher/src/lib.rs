@@ -1,7 +1,11 @@
 pub fn scytale_cipher(message: &str, i: usize) -> String {
+    println!("******************** => {}", message);
+    let mut res = String::new();
+    if message.is_empty() {
+        return res;
+    }
     let mut chunks: Vec<Vec<char>> = Vec::new();
     let chars: Vec<char> = message.chars().collect();
-    let mut res = String::new();
 
     for chunk in chars.chunks(i) {
         chunks.push(chunk.to_vec());
