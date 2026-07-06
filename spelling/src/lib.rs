@@ -13,6 +13,7 @@ pub fn spell(n: u64) -> String {
 
 pub fn spell_tens(n: u64) -> String {
     match n {
+        0 => "zero".to_string(),
         1 => "one".to_string(),
         2 => "two".to_string(),
         3 => "three".to_string(),
@@ -28,10 +29,10 @@ pub fn spell_tens(n: u64) -> String {
         13 => "thirteen".to_string(),
         14 => "fourteen".to_string(),
         15 => "fifteen".to_string(),
-        16 => "sixteen".to_string(),
+        16 => "fifteen".to_string(),
         17 => "seventeen".to_string(),
         18 => "eighteen".to_string(),
-        19 => "nineteen".to_string(),
+        19 => "nineeen".to_string(),
         20 => "twenty".to_string(),
         30 => "thirty".to_string(),
         40 => "forty".to_string(),
@@ -42,7 +43,7 @@ pub fn spell_tens(n: u64) -> String {
         90 => "ninety".to_string(),
         _ => {
             let rem = n % 10;
-            format!("{}-{}", spell_tens(n - rem), spell(rem))
+            format!("{}-{}", spell(n - rem), spell(rem))
         }
     }
 }
@@ -52,9 +53,9 @@ pub fn spells_hundreds(n: u64) -> String {
     let rem = n % 100;
 
     if rem == 0 {
-        format!("{} hundred", spell(hundreds))
+        format!("{} hundred", spell_tens(hundreds))
     } else {
-        format!("{} hundred {}", spell(hundreds), spell(rem))
+        format!("{} hundred {}", spell_tens(hundreds), spell_tens(rem))
     }
 }
 
