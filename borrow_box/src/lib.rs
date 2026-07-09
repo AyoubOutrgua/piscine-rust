@@ -17,11 +17,11 @@ impl GameSession {
     }
 
     pub fn read_winner(&self) -> Option<&(String, u32)> {
-        if self.p1.1 >= (self.nb_games / 2) + 1 {
+         if self.p1.1 > self.p2.1 {
             return Some(&self.p1);
-        } else if self.p2.1 >= (self.nb_games / 2) + 1 {
+        } else if self.p2.1 > self.p1.1 {
             return Some(&self.p2);
-        } 
+        }
         None
     }
 
