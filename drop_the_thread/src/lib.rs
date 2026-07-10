@@ -8,7 +8,7 @@ pub struct ThreadPool {
 
 impl ThreadPool {
     pub fn new() -> Self {
-        ThreadPool {
+        Self {
             drops: Cell::new(0),
             states: RefCell::new(Vec::<bool>::new()),
         }
@@ -17,7 +17,7 @@ impl ThreadPool {
     pub fn new_thread(&self, c: String) -> (usize, Thread) {
         let id = self.thread_len();
         self.states.borrow_mut().push(false);
-        (id, Thread::new(id, c, &self))
+        (id, Thread::new(id, c, self))
 
     }
 
@@ -26,18 +26,21 @@ impl ThreadPool {
     }
 
     pub fn is_dropped(&self, id: usize) -> bool {
-        self.states.borrow()[id]
+        if *self.states.borrow().get(id).unwrap_or(&false) {
+            true
+        } else {
+            false
+        }
     }
 
     pub fn drop_thread(&self, id: usize) {
-        let mut states = self.states.borrow_mut();
-        if states[id] {
-            panic!("{} is already dropped", id);
+        if self.is_dropped(id) {
+            panic!("{} is already dropped", id)
+        } else {
+            self.states.borrow_mut()[id] = true;
+            let neww = self.drops.get() + 1;
+            self.drops.set(neww);
         }
-        states[id] = true;
-        let current_drops = self.drops.get();
-        self.drops.set(current_drops + 1);
-
     }
 }
 
@@ -57,11 +60,13 @@ impl<'a> Thread<'a> {
         }
     }
 
-    pub fn skill(self) {}
+    pub fn skill(self) {
+        drop(self)
+    }
 }
 
 impl Drop for Thread<'_> {
     fn drop(&mut self) {
-        self.parent.drop_thread(self.pid)
+        self.parent.drop_thread(self.pid);
     }
 }
