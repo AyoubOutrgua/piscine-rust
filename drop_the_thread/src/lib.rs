@@ -3,14 +3,14 @@ use std::cell::{Cell, RefCell};
 #[derive(Debug)]
 pub struct ThreadPool {
     pub drops: Cell<usize>,
-    pub states: RefCell<Vec<bool>>
+    pub states: RefCell<Vec<bool>>,
 }
 
 impl ThreadPool {
     pub fn new() -> Self {
         Self {
             drops: Cell::new(0),
-            states: RefCell::new(Vec::<bool>::new()),
+            states: RefCell::new(Vec::new()),
         }
     }
 
@@ -18,7 +18,6 @@ impl ThreadPool {
         let id = self.thread_len();
         self.states.borrow_mut().push(false);
         (id, Thread::new(id, c, self))
-
     }
 
     pub fn thread_len(&self) -> usize {
@@ -46,14 +45,14 @@ impl ThreadPool {
 
 #[derive(Debug)]
 pub struct Thread<'a> {
-    pid: usize,
-    cmd: String,
-    parent: &'a ThreadPool,
+    pub pid: usize,
+    pub cmd: String,
+    pub parent: &'a ThreadPool,
 }
 
 impl<'a> Thread<'a> {
     pub fn new(p: usize, c: String, t: &'a ThreadPool) -> Self {
-        Thread {
+        Self {
             pid: p,
             cmd: c,
             parent: t,
