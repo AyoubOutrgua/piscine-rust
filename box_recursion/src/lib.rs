@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Role {
     CEO,
     Manager,
@@ -20,7 +20,7 @@ pub struct WorkEnvironment {
     pub grade: Link,
 }
 
-pub type Link = Box<Option<Worker>>;
+pub type Link = Option<Box<Worker>>;
 
 #[derive(Debug)]
 pub struct Worker {
@@ -31,16 +31,16 @@ pub struct Worker {
 
 impl WorkEnvironment {
     pub fn new() -> Self {
-        Self { grade: Box::new(None) }
+        Self { grade: None }
     }
 
     pub fn add_worker(&mut self, name: &str, role: &str) {
         let worker = Worker {
             role: Role::from(role),
             name: name.to_string(),
-            next: Box::new(self.grade.take()),
+            next: self.grade.take(),
         };
-        self.grade = Box::new(Some(worker))
+        self.grade = Some(Box::new(worker))
     }
 
     pub fn remove_worker(&mut self) -> Option<String> {
