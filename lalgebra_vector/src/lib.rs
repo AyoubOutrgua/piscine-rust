@@ -14,15 +14,15 @@ pub struct Vector<T: Scalar>(pub Vec<T>);
 impl<T: Scalar> Add for Vector<T> {
     type Output = Option<Vector<T>>;
 
-    fn add(self, other: Vector<T>) -> Self::Output {
-        if self.0.len() != other.0.len() {
+    fn add(self, rhs: Vector<T>) -> Self::Output {
+        if self.0.len() != rhs.0.len() {
             return None;
         }
 
         let result: Vec<T> = self
             .0
             .into_iter()
-            .zip(other.0.into_iter())
+            .zip(rhs.0.into_iter())
             .map(|(a, b)| a + b)
             .collect();
 
@@ -31,14 +31,14 @@ impl<T: Scalar> Add for Vector<T> {
 }
 
 impl<T: Scalar> Vector<T> {
-    pub fn dot(self, other: Self) -> Option<T> {
-        if self.0.len() != other.0.len() {
+    pub fn dot(self, rhs: Self) -> Option<T> {
+        if self.0.len() != rhs.0.len() {
             return None;
         }
 
         let mut sum = T::zero();
 
-        for (a, b) in self.0.into_iter().zip(other.0.into_iter()) {
+        for (a, b) in self.0.into_iter().zip(rhs.0.into_iter()) {
             sum = sum + (a * b);
         }
 
