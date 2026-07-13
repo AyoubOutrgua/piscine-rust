@@ -45,25 +45,75 @@ impl fmt::Debug for BloodType {
             Antigen::B => "B",
             Antigen::AB => "AB",
             Antigen::O => "O",
-        }
+        };
         let rh_factor = match self.rh_factor {
             RhFactor::Positive => "+",
             RhFactor::Negative => "-",
-        }
+        };
         write!(f, "{}{}",antigen, rh_factor)?;
+        Ok(())
     }
 }
 
 impl BloodType {
 	pub fn can_receive_from(self, other: Self) -> bool {
-		todo!()
-	}
+        let rh = match (self.rh_factor, other.rh_factor) {
+            (RhFactor::Positive, _) => true,
+            (RhFactor::Negative, RhFactor::Negative) => true,
+            _ => false,
+        };
+        let antigen = match (self.antigen, other.antigen) {
+            (Antigen::AB, _) => true,
+            (Antigen::A, Antigen::A | Antigen::O) => true,
+            (Antigen::B, Antigen::B | Antigen::O) => true,
+            (Antigen::O, Antigen::O) => true,
+            _ => false,
+        };
+        rh && antigen
+    }
 
-	pub fn donors(self) -> Vec<Self> {
-		todo!()
-	}
+    pub fn donors(self) -> Vec<Self> {
+        get_all_bloods().into_iter().filter(|boond| self.can_receive_from(*boond)).collect()
+    }
 
-	pub fn recipients(self) -> Vec<Self> {
-		todo!()
-	}
+    pub fn recipients(self) -> Vec<Self> {
+        get_all_bloods().into_iter().filter(|boond| boond.can_receive_from(self)).collect()
+    }
+}
+
+fn get_all_bloods() -> Vec<BloodType>{
+    vec![
+        BloodType{
+            antigen: Antigen::A,
+            rh_factor: RhFactor::Positive,
+        },
+        BloodType{
+            antigen: Antigen::A,
+            rh_factor: RhFactor::Negative,
+        },
+        BloodType{
+            antigen: Antigen::B,
+            rh_factor: RhFactor::Positive,
+        },
+        BloodType{
+            antigen: Antigen::B,
+            rh_factor: RhFactor::Negative,
+        },
+        BloodType{
+            antigen: Antigen::AB,
+            rh_factor: RhFactor::Positive,
+        },
+        BloodType{
+            antigen: Antigen::AB,
+            rh_factor: RhFactor::Negative,
+        },
+        BloodType{
+            antigen: Antigen::O,
+            rh_factor: RhFactor::Positive,
+        },
+        BloodType{
+            antigen: Antigen::O,
+            rh_factor: RhFactor::Negative,
+        },
+    ]
 }
