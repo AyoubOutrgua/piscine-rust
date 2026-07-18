@@ -28,28 +28,22 @@ impl Cart {
         }
     }
     pub fn generate_receipt(&mut self) -> Vec<f32> {
-        let mut prices: Vec<f32>  = self.items.iter().map(|(_,p)| *p).collect();
+        let mut prices: Vec<f32> = self.items.iter().map(|(_, p)| *p).collect();
+
         prices.sort_by(|a, b| a.partial_cmp(b).unwrap());
 
-        let mut result = Vec::new();
+        let free_count = prices.len() / 3;
+        let free_total: f32 = prices.iter().take(free_count).sum();
+        let total: f32 = prices.iter().sum();
 
-        for chunk in prices.chunks(3) {
-            if chunk.len() == 3 {
-                let cheap = chunk[0];
-                let total: f32 = chunk.iter().sum();
-                let discount = cheap / total;
-                for p in chunk {
-                    let new_price = p * (1.0 - discount);
-                    result.push((new_price * 100.0).round() / 100.0);
-                }
-            } else {
-                for p in chunk {
-                    result.push((p * 100.0).round() / 100.0);
-                }
-            }
+        let discount = free_total / total;
+
+        for p in prices.iter_mut() {
+            let new_price = *p * (1.0 - discount);
+            *p = (new_price * 100.0).round() / 100.0;
         }
 
-        self.receipt = result.clone();
-        result
+        self.receipt = prices.clone();
+        prices
     }
 }
