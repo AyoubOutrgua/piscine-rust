@@ -37,6 +37,7 @@ impl Cart {
             let new_price = *p * (1.0 - discount);
             *p = (new_price * 100.0).round() / 100.0;
         }
+        self.receipt = prices.clone();
         prices
     }
 }
