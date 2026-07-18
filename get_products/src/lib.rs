@@ -1,16 +1,12 @@
 pub fn get_products(arr: Vec<usize>) -> Vec<usize> {
-    let mut result: Vec<usize> = Vec::new();
-    if arr.len() <= 0 {
-        return result;
+    let mut res = Vec::new();
+    if arr.len() == 1 {
+        return res;
     }
-    for i in 0..arr.len() {
-        let mut product = 1;
-        for j in 0..arr.len() {
-            if i != j {
-                product *= arr[j];
-            }
-        }
-        result.push(product);
+    for element in arr.clone() {
+        let mut list: Vec<usize> = arr.iter().cloned().filter(|ele| *ele != element).collect();
+        res.push(list.iter().product());
+        list.clear();
     }
-    result
+    res
 }
