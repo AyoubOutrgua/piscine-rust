@@ -1,5 +1,4 @@
 use adding_twice::*;
-use adding::*;
 fn main() {
     let add10 = add_curry(10);
     let value = twice(add10);
